@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include"SLL.h"
 
 typedef struct node
 {
@@ -9,35 +10,78 @@ typedef struct node
 
 int main()
 {
-    Slist **head = NULL;
+    Slist *head = NULL;
+    Slist *new = NULL;
+    Slist *temp = NULL;
 
-    Slist *Node1 = malloc(sizeof(Slist));
-    printf("Enter the data for node 1: ");
-    scanf("%d",&Node1 -> data);
+    int n; 
 
-    Slist *Node2 = malloc(sizeof(Slist));
-    printf("Enter the data for node 2: ");
-    scanf("%d", &Node2 -> data);
+    printf("Enter the number of nodes: ");
+    scanf("%d",&n);
 
-    *head = Node1;
-
-    if(*head == NULL)
+    for(int i = 0; i < n; i++)
     {
-        return 0;
+        new = malloc(sizeof(Slist));
+
+        if(new == NULL)
+        {
+            printf("Memory not allocated\n");
+            return FAILURE;
+        }
+
+        printf("Enter the data for %d node: ", i+ 1);
+        scanf("%d",&new -> data);
+
+        new -> link = NULL;
+
+        if(head == NULL)
+        {
+            head = new;
+            temp = new;
+        }
+        else
+        {
+            temp -> link = new;
+            temp = new;
+        }
     }
-    else
-    {
-        Slist *temp = *head;
-        *head = temp -> link;
-        free(temp);
-    }
 
-    Slist *temp = *head;
-    while(temp -> link != NULL)
+    printf("Before deleting the first node: ");
+    
+    temp = head;
+
+    while(temp != NULL)
     {
-        printf("Node1 -> %d ", temp -> data);
+        printf("%d -> ", temp -> data);
         temp = temp -> link;
     }
 
-    return 0;
+    printf("NULL\n");
+
+    printf("After deleting the first node: ");
+
+    temp = head;
+    head = temp -> link;
+    free(temp);
+
+    Slist *print = head;
+
+    while(print != NULL)
+    {
+        printf("%d -> ", print -> data);
+        print = print -> link;
+    }
+
+    printf("NULL");
+
+
+    // Free all remaining nodes
+    while(head != NULL)
+    {
+        temp = head;
+        head = head->link;
+        free(temp);
+    }
+
+    return SUCCESS;
 }

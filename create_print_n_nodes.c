@@ -48,6 +48,8 @@ int main()
     // Print the linked list
     temp = head;
 
+    printf("Linked list: ");
+
     while(temp != NULL)
     {
         printf("%d -> ", temp -> data);

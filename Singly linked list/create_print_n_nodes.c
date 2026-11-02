@@ -58,5 +58,19 @@ int main()
 
     printf("NULL\n");
 
+    // Free the heap segment
+    temp = head;
+
+    while(temp != NULL)
+    {
+        Slist *del = temp;  // Store current node address
+
+        temp = temp->link; // Move to the next node
+
+        free(del);          // Free current node
+    }
+
+    head = NULL;
+
     return 0;
 }
